@@ -1,8 +1,15 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import {Routes, Route, useNavigate} from 'react-router-dom';
 
 function Item({ item }) {
+  const navigate = useNavigate();
+
+  const navigateToItem = () => {
+    navigate('/item-detail')
+  }
+  
   return ( 
     <Card style={{ width: '18rem' }}>
       <Card.Img variant="top" src={item.pictureUrl} style={{height: 250}} />
@@ -11,7 +18,7 @@ function Item({ item }) {
         <Card.Text>
           Precio: $ {item.price}
         </Card.Text>
-        <Button variant="primary">Ver detalle del producto</Button>
+        <Button variant="primary" onClick={navigateToItem}>Ver detalle del producto</Button>
       </Card.Body>
       <Card.Footer className="text-muted">{item.stock > 0 ? <>Stock: {item.stock}</> : <>Sin stock</>}</Card.Footer>
     </Card>

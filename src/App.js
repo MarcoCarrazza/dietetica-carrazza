@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
 import NavBar from './components/NavBar/NavBar'
-import ItemListContainer from './components/ItemListContainer/ItemListContainer';
+import Rutas from './routes';
 
 function App() {
   return (
     <div>
       <NavBar />
-      <ItemListContainer greeting={'Bienvenido a nuestra tienda'} />
+      <Rutas />
     </div>
   );
 }
