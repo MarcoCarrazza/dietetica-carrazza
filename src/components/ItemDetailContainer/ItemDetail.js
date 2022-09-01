@@ -3,7 +3,7 @@ import { Button, Card, Row, Col, Stack } from 'react-bootstrap';
 import Counter from './Counter';
 
 function ItemDetail({ item }) {
-  const [qty, setQty] = useState(0);
+  const [qty, setQty] = useState(item.stock>0 ? 1 : 0);
 
   const updateQty = (value) => {
     console.log('apretaste');
