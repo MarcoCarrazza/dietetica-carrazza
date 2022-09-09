@@ -7,24 +7,25 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function ItemDetail({ item }) {
-  // const { addItem } = useContext(CartContext)
+  const { addItem } = useContext(CartContext)
 
   const [show, setShow] = useState(false);
   
   const onAdd = (qty) => {
-    //Acá en teoría debería agregar una acción para agregar al carrito el objeto {...item, qty: qty}, pero ésto escapa al alcance de este desafío, ya que dicha acción se reemplaza por una función addToCart() que venga de un context
+    addItem({...item, qty: qty})
+    notify()
     setShow(!show)
   }
 
-//   const notify = () => toast('Producto agregado al carrito!', {
-//     position: "top-right",
-//     autoClose: 2000,
-//     hideProgressBar: true,
-//     closeOnClick: true,
-//     pauseOnHover: true,
-//     draggable: true,
-//     style: {background: 'green', color: 'white'}
-// });
+  const notify = () => toast('Producto agregado al carrito!', {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    style: {background: 'green', color: 'white'}
+});
 
   return ( 
     <>
@@ -46,7 +47,7 @@ function ItemDetail({ item }) {
           </Stack>
         </Col>
       </Row>
-      {/* <ToastContainer /> */}
+      <ToastContainer />
     </>
    );
 }
