@@ -12,9 +12,12 @@ function CartProvider({ children }) {
   
   const addItem = (item) => {
     const search = cartItems.findIndex(prod => prod.id === item.id)
-    search > -1
-      ? cartItems[search].qty += item.qty
-      : setCartItems([...cartItems, item])
+    if(search > -1){
+      cartItems[search].qty += item.qty
+      setCartItems([...cartItems]) //Es necesario "re-setear" cartItems para disparar el useEffect de arriba y así actualizar el context en todos los children
+    } else {
+      setCartItems([...cartItems, item])
+    }
   }
 
   const removeItem = (id) => {

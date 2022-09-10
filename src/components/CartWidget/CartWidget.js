@@ -1,15 +1,23 @@
-import React from 'react';
-import { Button } from 'react-bootstrap';
+import React, { useContext } from 'react';
+import { Button, Badge } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
+import { CartContext } from '../../context/CartProvider';
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 function CartWidget() {
-  return ( 
-  <Button>
-    <i className="bi bi-cart3" style={{border: '1px solid white', borderRadius: 5, padding: '5px 12px'}}>
-      <NavLink to={'/cart'} style={{color: 'white', textDecoration: 'none'}}>Ir al carrito</NavLink>
-    </i>
-  </Button> );
+  const { cartItems } = useContext(CartContext)
+
+  return (
+    <>{cartItems.length
+      ? <Button variant='outline-dark'>
+        <NavLink to={'/cart'} style={{ color: 'white', textDecoration: 'none' }}>
+          <Badge bg="dark">{cartItems.reduce((total, prod) => total + prod.qty, 0)}</Badge>
+          <i className="bi bi-cart3" style={{ padding: '5px 12px' }}></i>
+        </NavLink>
+      </Button>
+      : ''
+    }</>
+  )
 }
 
 export default CartWidget;
