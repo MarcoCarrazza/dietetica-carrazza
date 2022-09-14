@@ -2,36 +2,40 @@ import React, { useState, useEffect } from 'react';
 import ItemList from './ItemList/ItemList';
 import Spinner from 'react-bootstrap/Spinner';
 import { useParams } from 'react-router-dom';
-import data from '../../DB/data.json'
+import db from '../../servicies';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 
 function ItemListContainer({ greeting }) {
   const [products, setProducts] = useState();
   
   const params = useParams()
-  
-  const task = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(data)
-    }, 2000);
-  })
 
   useEffect(() => {
-    task
-      .then(response => setProducts(response))
-      .catch(err => console.log(err))
-      .finally(() => console.log('Finalizó la promesa.'))
-  }, [params]);
+    const fetchData = async () => {
+      try {
+        const data = collection(db, 'products')
+        let q
+        if(params.id){
+          q = query(data, where('categoryId', '==', params.id))
+        } else {
+          q = query(data)
+        }
+        const col = await getDocs(q)
+        const res = col.docs.map(doc => doc = {id: doc.id, ...doc.data()})
+        return res
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
-  const categoryFilter = product => {
-    if(!params.id) return product
-    return product.category === params.id
-  }
+    fetchData().then(response => setProducts(response))
+  }, [params]);
   
   return ( 
     <section>
       {!params.id && <h1 className='text-center'>Nuestros productos</h1>}
       <div className='d-flex-column justify-content-center'>
-        {!products ? <Spinner animation="grow" variant="primary" /> : <ItemList items={products.filter(categoryFilter)} category={params.id} />}
+        {!products ? <Spinner animation="grow" variant="primary" /> : <ItemList items={products} category={params.id} />}
       </div>
     </section>
    );

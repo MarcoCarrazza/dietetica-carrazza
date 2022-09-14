@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Button, Table, Row, Col, Stack } from 'react-bootstrap';
 import { CartContext } from '../../context/CartProvider';
 import { NavLink } from 'react-router-dom';
+import FormCheckout from './Checkout/FormCheckout';
 
 function Cart() {
   const { cartItems, removeItem, clear } = useContext(CartContext)
@@ -68,17 +69,12 @@ function Cart() {
               </tr>
             </tbody>
             </Table>
+            
             <Stack gap={3}>
-              <Row className="justify-content-md-center">
-                <Col md="auto">
-                  <Button variant='success'>Terminar la compra</Button>
-                </Col>
-              </Row>
-              <Row className="justify-content-md-center">
-                <Col md="auto">
-                  <Button variant='danger' onClick={clear}>Vaciar carrito</Button> 
-                </Col>
-              </Row>
+              <Button variant='danger' onClick={clear}>Vaciar carrito</Button>
+              <FormCheckout 
+                cartItems={cartItems}
+                totalItems={cartItems.reduce((total, prod) => total + (prod.price * prod.qty), 0)} />
             </Stack>
           </>
       }

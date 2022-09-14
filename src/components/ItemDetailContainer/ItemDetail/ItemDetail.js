@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { Button, Row, Col, Stack } from 'react-bootstrap';
-import Counter from './Counter';
+import Counter from '../Counter';
 import { NavLink } from 'react-router-dom';
-import { CartContext } from '../../context/CartProvider';
+import { CartContext } from '../../../context/CartProvider';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
